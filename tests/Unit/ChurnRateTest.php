@@ -1,10 +1,9 @@
 <?php
 
+use Illuminate\Support\Collection;
 use PlusInfoLab\CashierSaaSMetrics\Contracts\SubscriptionProvider;
 use PlusInfoLab\CashierSaaSMetrics\Facades\Metrics;
 use PlusInfoLab\CashierSaaSMetrics\Providers\SubscriptionProviderFactory;
-use PlusInfoLab\CashierSaaSMetrics\Tests\TestCase;
-use Illuminate\Support\Collection;
 
 beforeEach(function () {
     $this->mockProvider = Mockery::mock(SubscriptionProvider::class);
@@ -53,7 +52,7 @@ beforeEach(function () {
     $this->mockProvider
         ->shouldReceive('getSubscriptionCreatedAt')
         ->byDefault()
-        ->andReturnUsing(fn ($sub) => $sub['created_at'] instanceof \DateTimeInterface ? $sub['created_at'] : now());
+        ->andReturnUsing(fn ($sub) => $sub['created_at'] instanceof DateTimeInterface ? $sub['created_at'] : now());
 
     $this->mockProvider
         ->shouldReceive('getSubscriptionCancelledAt')

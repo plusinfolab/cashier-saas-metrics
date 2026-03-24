@@ -2,25 +2,27 @@
 
 namespace PlusInfoLab\CashierSaaSMetrics\Metrics;
 
-use Carbon\CarbonInterface;
 use Illuminate\Support\Collection;
 use PlusInfoLab\CashierSaaSMetrics\Contracts\MetricCalculator as Contract;
 use PlusInfoLab\CashierSaaSMetrics\Contracts\SubscriptionProvider;
+use PlusInfoLab\CashierSaaSMetrics\Enums\IntervalType;
 use PlusInfoLab\CashierSaaSMetrics\Enums\PeriodType;
 use PlusInfoLab\CashierSaaSMetrics\Support\Period;
 
 abstract class AbstractMetricCalculator implements Contract
 {
     protected ?Period $period = null;
+
     protected array $plans = [];
+
     protected ?string $currency = null;
+
     protected ?string $groupBy = null;
 
     public function __construct(
         protected readonly SubscriptionProvider $provider,
         protected readonly string $baseCurrency
-    ) {
-    }
+    ) {}
 
     /**
      * Set the period for calculation.
@@ -121,7 +123,7 @@ abstract class AbstractMetricCalculator implements Contract
         $amount = $this->provider->convertToBaseCurrency($amount, $currency);
 
         // Normalize to monthly
-        $intervalType = \PlusInfoLab\CashierSaaSMetrics\Enums\IntervalType::fromString($interval);
+        $intervalType = IntervalType::fromString($interval);
         $amount = $amount * $intervalType->getMonthlyMultiplier();
 
         return $amount;

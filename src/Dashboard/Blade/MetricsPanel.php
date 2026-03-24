@@ -4,6 +4,7 @@ namespace PlusInfoLab\CashierSaaSMetrics\Dashboard\Blade;
 
 use Illuminate\View\Component;
 use PlusInfoLab\CashierSaaSMetrics\Facades\Metrics;
+use PlusInfoLab\CashierSaaSMetrics\Support\MetricResult;
 
 class MetricsPanel extends Component
 {
@@ -71,7 +72,7 @@ class MetricsPanel extends Component
     {
         $value = $metric['value'];
 
-        if ($value instanceof \PlusInfoLab\CashierSaaSMetrics\Support\MetricResult) {
+        if ($value instanceof MetricResult) {
             return match ($metric['format'] ?? null) {
                 'currency' => $value->formattedAsCurrency(),
                 'percentage' => $value->formattedAsPercentage(),

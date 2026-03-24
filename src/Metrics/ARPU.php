@@ -12,6 +12,7 @@ class ARPU extends AbstractMetricCalculator
     public function activeOnly(bool $activeOnly = true): self
     {
         $this->activeOnly = $activeOnly;
+
         return $this;
     }
 
@@ -118,6 +119,7 @@ class ARPU extends AbstractMetricCalculator
                 $totalRevenue = $groupPayments->sum(function ($payment) {
                     $amount = $payment['amount'] ?? 0;
                     $currency = $payment['currency'] ?? $this->baseCurrency;
+
                     return $this->provider->convertToBaseCurrency($amount, $currency);
                 });
 

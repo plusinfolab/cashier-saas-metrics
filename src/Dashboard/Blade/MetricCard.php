@@ -14,8 +14,7 @@ class MetricCard extends Component
         public readonly ?string $color = null,
         public readonly ?string $trend = null,
         public readonly ?string $period = null
-    ) {
-    }
+    ) {}
 
     /**
      * Get the value for display.

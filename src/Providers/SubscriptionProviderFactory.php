@@ -4,7 +4,6 @@ namespace PlusInfoLab\CashierSaaSMetrics\Providers;
 
 use Illuminate\Support\Manager;
 use PlusInfoLab\CashierSaaSMetrics\Contracts\SubscriptionProvider;
-use PlusInfoLab\CashierSaaSMetrics\Providers\Adapters;
 
 class SubscriptionProviderFactory extends Manager
 {

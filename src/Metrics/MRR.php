@@ -8,24 +8,29 @@ use PlusInfoLab\CashierSaaSMetrics\Support\MetricResult;
 class MRR extends AbstractMetricCalculator
 {
     protected bool $includeNew = true;
+
     protected bool $includeChurned = false;
+
     protected bool $includeTrials = false;
 
     public function includeNew(bool $include = true): self
     {
         $this->includeNew = $include;
+
         return $this;
     }
 
     public function includeChurned(bool $include = true): self
     {
         $this->includeChurned = $include;
+
         return $this;
     }
 
     public function includeTrials(bool $include = true): self
     {
         $this->includeTrials = $include;
+
         return $this;
     }
 

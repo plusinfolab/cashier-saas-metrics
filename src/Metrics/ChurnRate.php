@@ -2,7 +2,6 @@
 
 namespace PlusInfoLab\CashierSaaSMetrics\Metrics;
 
-use Illuminate\Support\Collection;
 use PlusInfoLab\CashierSaaSMetrics\Support\MetricResult;
 
 class ChurnRate extends AbstractMetricCalculator
@@ -12,6 +11,7 @@ class ChurnRate extends AbstractMetricCalculator
     public function gross(bool $gross = true): self
     {
         $this->calculateGrossChurn = $gross;
+
         return $this;
     }
 
@@ -81,6 +81,7 @@ class ChurnRate extends AbstractMetricCalculator
         return $this->filterSubscriptions($subscriptions)
             ->filter(function (array $subscription) use ($previousPeriod) {
                 $createdAt = $this->provider->getSubscriptionCreatedAt($subscription);
+
                 return $createdAt < $previousPeriod->end;
             })
             ->reject(function (array $sub) {

@@ -11,8 +11,7 @@ class MetricsCache implements Contract
 
     public function __construct(
         protected readonly Repository $cache
-    ) {
-    }
+    ) {}
 
     /**
      * Get a cached metric value.

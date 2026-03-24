@@ -10,8 +10,7 @@ readonly class Period
     public function __construct(
         public DateTimeInterface $start,
         public DateTimeInterface $end
-    ) {
-    }
+    ) {}
 
     /**
      * Create a period from a period type.

@@ -12,6 +12,5 @@ class SubscriptionCreated
         public readonly string|int $subscriptionId,
         public readonly ?string $customerId = null,
         public readonly ?array $subscriptionData = null
-    ) {
-    }
+    ) {}
 }

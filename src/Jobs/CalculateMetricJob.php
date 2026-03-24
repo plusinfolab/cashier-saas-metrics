@@ -7,6 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use PlusInfoLab\CashierSaaSMetrics\Facades\Metrics;
 
 class CalculateMetricJob implements ShouldQueue
 {
@@ -39,7 +40,7 @@ class CalculateMetricJob implements ShouldQueue
      */
     public function handle(): void
     {
-        $facade = \PlusInfoLab\CashierSaaSMetrics\Facades\Metrics::getFacadeRoot();
+        $facade = Metrics::getFacadeRoot();
 
         if (! $facade) {
             return;

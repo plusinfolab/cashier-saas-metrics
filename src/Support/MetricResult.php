@@ -13,8 +13,7 @@ class MetricResult implements Arrayable
         public readonly string $name,
         public readonly ?string $currency = null,
         public readonly ?string $period = null
-    ) {
-    }
+    ) {}
 
     /**
      * Create a new metric result.

@@ -2,8 +2,8 @@
 
 namespace PlusInfoLab\CashierSaaSMetrics\Providers\Adapters;
 
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 class CustomProvider extends AbstractSubscriptionProvider
 {
@@ -52,7 +52,7 @@ class CustomProvider extends AbstractSubscriptionProvider
             return collect();
         }
 
-        $model = new $this->subscriptionModel();
+        $model = new $this->subscriptionModel;
 
         return $model->newQuery()
             ->whereNotNull($this->fieldMap['customer_id'])
@@ -73,7 +73,7 @@ class CustomProvider extends AbstractSubscriptionProvider
             return collect();
         }
 
-        $model = new $this->subscriptionModel();
+        $model = new $this->subscriptionModel;
 
         return $model->newQuery()
             ->whereNotNull($this->fieldMap['cancelled_at'])
@@ -91,7 +91,7 @@ class CustomProvider extends AbstractSubscriptionProvider
             return collect();
         }
 
-        $model = new $this->subscriptionModel();
+        $model = new $this->subscriptionModel;
 
         return $model->newQuery()
             ->whereBetween($this->fieldMap['created_at'], [$start, $end])
@@ -108,7 +108,7 @@ class CustomProvider extends AbstractSubscriptionProvider
             return null;
         }
 
-        $model = new $this->subscriptionModel();
+        $model = new $this->subscriptionModel;
 
         $subscription = $model->newQuery()
             ->where($this->fieldMap['id'], $subscriptionId)
@@ -130,7 +130,7 @@ class CustomProvider extends AbstractSubscriptionProvider
             return collect();
         }
 
-        $model = new $this->paymentModel();
+        $model = new $this->paymentModel;
 
         $dateField = $this->config['payment_date_field'] ?? 'created_at';
 
@@ -149,7 +149,7 @@ class CustomProvider extends AbstractSubscriptionProvider
             return collect();
         }
 
-        $model = new $this->paymentModel();
+        $model = new $this->paymentModel;
 
         $subscriptionField = $this->config['payment_subscription_field'] ?? 'subscription_id';
 

@@ -8,17 +8,20 @@ use PlusInfoLab\CashierSaaSMetrics\Support\MetricResult;
 class LifetimeValue extends AbstractMetricCalculator
 {
     protected ?float $arpu = null;
+
     protected ?float $churnRate = null;
 
     public function withArpu(?float $arpu): self
     {
         $this->arpu = $arpu;
+
         return $this;
     }
 
     public function withChurnRate(?float $churnRate): self
     {
         $this->churnRate = $churnRate;
+
         return $this;
     }
 
@@ -121,6 +124,7 @@ class LifetimeValue extends AbstractMetricCalculator
         $totalRevenue = $payments->sum(function ($payment) {
             $amount = $payment['amount'] ?? 0;
             $currency = $payment['currency'] ?? $this->baseCurrency;
+
             return $this->provider->convertToBaseCurrency($amount, $currency);
         });
 
@@ -136,6 +140,7 @@ class LifetimeValue extends AbstractMetricCalculator
         $startingCount = $subscriptions
             ->filter(function (array $subscription) use ($previousPeriod) {
                 $createdAt = $this->provider->getSubscriptionCreatedAt($subscription);
+
                 return $createdAt < $previousPeriod->end;
             })
             ->count();
@@ -162,6 +167,7 @@ class LifetimeValue extends AbstractMetricCalculator
         $startingCount = $group
             ->filter(function (array $subscription) use ($previousPeriod) {
                 $createdAt = $this->provider->getSubscriptionCreatedAt($subscription);
+
                 return $createdAt < $previousPeriod->end;
             })
             ->count();
@@ -191,6 +197,7 @@ class LifetimeValue extends AbstractMetricCalculator
     protected function getAllPayments(): Collection
     {
         $period = $this->getPeriod();
+
         return $this->provider->getPayments($period->start, $period->end);
     }
 

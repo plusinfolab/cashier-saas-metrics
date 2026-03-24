@@ -2,30 +2,36 @@
 
 namespace PlusInfoLab\CashierSaaSMetrics\Metrics;
 
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use PlusInfoLab\CashierSaaSMetrics\Support\MetricResult;
 
 class CohortAnalysis extends AbstractMetricCalculator
 {
     protected string $cohortBy = 'created_at';
+
     protected string $retentionMetric = 'mrr';
+
     protected int $periods = 6;
 
     public function by(string $field): self
     {
         $this->cohortBy = $field;
+
         return $this;
     }
 
     public function retentionMetric(string $metric): self
     {
         $this->retentionMetric = $metric;
+
         return $this;
     }
 
     public function periods(int $periods): self
     {
         $this->periods = $periods;
+
         return $this;
     }
 
@@ -72,7 +78,7 @@ class CohortAnalysis extends AbstractMetricCalculator
 
     protected function calculateCohortRetention(Collection $cohort, string $cohortKey): array
     {
-        $cohortDate = \Illuminate\Support\Carbon::parse($cohortKey.'-01');
+        $cohortDate = Carbon::parse($cohortKey.'-01');
 
         $initialValue = $this->calculateCohortInitialValue($cohort);
         $initialCount = $cohort->count();
@@ -127,13 +133,14 @@ class CohortAnalysis extends AbstractMetricCalculator
             ->toArray();
 
         $activeSubscriptions = $this->provider->getActiveSubscriptions()
-            ->filter(function (array $sub) use ($subscriptionIds, $periodStart, $periodEnd) {
+            ->filter(function (array $sub) use ($subscriptionIds, $periodEnd) {
                 $subId = $this->provider->getSubscriptionAttribute($sub, 'id');
                 if (! in_array($subId, $subscriptionIds, true)) {
                     return false;
                 }
 
                 $cancelledAt = $this->provider->getSubscriptionCancelledAt($sub);
+
                 return $cancelledAt === null || $cancelledAt > $periodEnd;
             });
 
@@ -157,13 +164,14 @@ class CohortAnalysis extends AbstractMetricCalculator
             ->toArray();
 
         return $this->provider->getActiveSubscriptions()
-            ->filter(function (array $sub) use ($subscriptionIds, $periodStart, $periodEnd) {
+            ->filter(function (array $sub) use ($subscriptionIds, $periodEnd) {
                 $subId = $this->provider->getSubscriptionAttribute($sub, 'id');
                 if (! in_array($subId, $subscriptionIds, true)) {
                     return false;
                 }
 
                 $cancelledAt = $this->provider->getSubscriptionCancelledAt($sub);
+
                 return $cancelledAt === null || $cancelledAt > $periodEnd;
             })
             ->count();

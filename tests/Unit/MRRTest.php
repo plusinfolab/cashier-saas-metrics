@@ -1,11 +1,11 @@
 <?php
 
+use Illuminate\Support\Collection;
 use PlusInfoLab\CashierSaaSMetrics\Contracts\SubscriptionProvider;
 use PlusInfoLab\CashierSaaSMetrics\Facades\Metrics;
 use PlusInfoLab\CashierSaaSMetrics\Metrics\MRR;
 use PlusInfoLab\CashierSaaSMetrics\Providers\SubscriptionProviderFactory;
-use PlusInfoLab\CashierSaaSMetrics\Tests\TestCase;
-use Illuminate\Support\Collection;
+use PlusInfoLab\CashierSaaSMetrics\Support\MetricResult;
 
 beforeEach(function () {
     // Mock the subscription provider
@@ -55,7 +55,7 @@ beforeEach(function () {
     $this->mockProvider
         ->shouldReceive('getSubscriptionCreatedAt')
         ->byDefault()
-        ->andReturnUsing(fn ($sub) => $sub['created_at'] instanceof \DateTimeInterface ? $sub['created_at'] : now());
+        ->andReturnUsing(fn ($sub) => $sub['created_at'] instanceof DateTimeInterface ? $sub['created_at'] : now());
 
     // Mock the provider factory to return our mocked provider
     $mockFactory = Mockery::mock(SubscriptionProviderFactory::class);
@@ -100,7 +100,7 @@ it('calculates MRR for active subscriptions', function () {
 
     $result = $mrr->calculate();
 
-    expect($result)->toBeInstanceOf(\PlusInfoLab\CashierSaaSMetrics\Support\MetricResult::class);
+    expect($result)->toBeInstanceOf(MetricResult::class);
     expect($result->value)->toBe(150.0);
 });
 

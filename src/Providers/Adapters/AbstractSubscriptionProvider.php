@@ -2,6 +2,8 @@
 
 namespace PlusInfoLab\CashierSaaSMetrics\Providers\Adapters;
 
+use GuzzleHttp\Client;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use PlusInfoLab\CashierSaaSMetrics\Contracts\SubscriptionProvider as Contract;
 
@@ -10,8 +12,7 @@ abstract class AbstractSubscriptionProvider implements Contract
     public function __construct(
         protected readonly array $config,
         protected readonly string $baseCurrency
-    ) {
-    }
+    ) {}
 
     /**
      * Get all active subscriptions.
@@ -86,7 +87,7 @@ abstract class AbstractSubscriptionProvider implements Contract
             return $createdAt;
         }
 
-        return \Illuminate\Support\Carbon::parse($createdAt);
+        return Carbon::parse($createdAt);
     }
 
     /**
@@ -104,7 +105,7 @@ abstract class AbstractSubscriptionProvider implements Contract
             return $cancelledAt;
         }
 
-        return \Illuminate\Support\Carbon::parse($cancelledAt);
+        return Carbon::parse($cancelledAt);
     }
 
     /**
@@ -169,7 +170,7 @@ abstract class AbstractSubscriptionProvider implements Contract
      */
     protected function makeRequest(string $method, string $url, array $options = []): array
     {
-        $client = new \GuzzleHttp\Client(array_merge([
+        $client = new Client(array_merge([
             'base_uri' => $this->getApiBaseUrl(),
             'headers' => $this->getApiHeaders(),
         ], $options));

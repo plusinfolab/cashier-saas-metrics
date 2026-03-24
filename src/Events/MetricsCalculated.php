@@ -13,6 +13,5 @@ class MetricsCalculated
         public readonly string $metricType,
         public readonly MetricResult $result,
         public readonly ?string $cacheKey = null
-    ) {
-    }
+    ) {}
 }

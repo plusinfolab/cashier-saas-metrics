@@ -2,6 +2,7 @@
 
 namespace PlusInfoLab\CashierSaaSMetrics\Providers\Adapters;
 
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Laravel\Cashier\Subscription as CashierSubscription;
 
@@ -116,7 +117,8 @@ class StripeProvider extends AbstractSubscriptionProvider
 
             return collect($response['data'] ?? [])
                 ->filter(function (array $sub) use ($start, $end) {
-                    $cancelledAt = \Illuminate\Support\Carbon::parse($sub['canceled_at']);
+                    $cancelledAt = Carbon::parse($sub['canceled_at']);
+
                     return $cancelledAt->between($start, $end);
                 })
                 ->map(function (array $sub) {
@@ -167,7 +169,8 @@ class StripeProvider extends AbstractSubscriptionProvider
 
             return collect($response['data'] ?? [])
                 ->filter(function (array $sub) use ($start, $end) {
-                    $createdAt = \Illuminate\Support\Carbon::parse($sub['created']);
+                    $createdAt = Carbon::parse($sub['created']);
+
                     return $createdAt->between($start, $end);
                 })
                 ->map(function (array $sub) {
@@ -229,7 +232,8 @@ class StripeProvider extends AbstractSubscriptionProvider
 
             return collect($response['data'] ?? [])
                 ->filter(function (array $invoice) use ($start, $end) {
-                    $createdAt = \Illuminate\Support\Carbon::parse($invoice['created']);
+                    $createdAt = Carbon::parse($invoice['created']);
+
                     return $createdAt->between($start, $end);
                 })
                 ->map(function (array $invoice) {
@@ -240,9 +244,9 @@ class StripeProvider extends AbstractSubscriptionProvider
                         'status' => $invoice['status'],
                         'subscription_id' => $invoice['subscription'] ?? null,
                         'customer_id' => $invoice['customer'] ?? null,
-                        'created_at' => \Illuminate\Support\Carbon::parse($invoice['created']),
+                        'created_at' => Carbon::parse($invoice['created']),
                         'paid_at' => isset($invoice['status_transitions']['paid_at'])
-                            ? \Illuminate\Support\Carbon::parse($invoice['status_transitions']['paid_at'])
+                            ? Carbon::parse($invoice['status_transitions']['paid_at'])
                             : null,
                     ];
                 });
@@ -276,7 +280,7 @@ class StripeProvider extends AbstractSubscriptionProvider
                         'status' => $invoice['status'],
                         'subscription_id' => $invoice['subscription'] ?? null,
                         'customer_id' => $invoice['customer'] ?? null,
-                        'created_at' => \Illuminate\Support\Carbon::parse($invoice['created']),
+                        'created_at' => Carbon::parse($invoice['created']),
                     ];
                 });
         } catch (\Exception $e) {
@@ -302,13 +306,13 @@ class StripeProvider extends AbstractSubscriptionProvider
             'interval' => $price['recurring']['interval'] ?? 'month',
             'interval_count' => $price['recurring']['interval_count'] ?? 1,
             'quantity' => $subscription['items']['data'][0]['quantity'] ?? 1,
-            'created_at' => \Illuminate\Support\Carbon::parse($subscription['created']),
-            'current_period_start' => \Illuminate\Support\Carbon::parse($subscription['current_period_start']),
-            'current_period_end' => \Illuminate\Support\Carbon::parse($subscription['current_period_end']),
+            'created_at' => Carbon::parse($subscription['created']),
+            'current_period_start' => Carbon::parse($subscription['current_period_start']),
+            'current_period_end' => Carbon::parse($subscription['current_period_end']),
             'cancel_at_period_end' => $subscription['cancel_at_period_end'] ?? false,
-            'canceled_at' => isset($subscription['canceled_at']) ? \Illuminate\Support\Carbon::parse($subscription['canceled_at']) : null,
-            'trial_start' => isset($subscription['trial_start']) ? \Illuminate\Support\Carbon::parse($subscription['trial_start']) : null,
-            'trial_end' => isset($subscription['trial_end']) ? \Illuminate\Support\Carbon::parse($subscription['trial_end']) : null,
+            'canceled_at' => isset($subscription['canceled_at']) ? Carbon::parse($subscription['canceled_at']) : null,
+            'trial_start' => isset($subscription['trial_start']) ? Carbon::parse($subscription['trial_start']) : null,
+            'trial_end' => isset($subscription['trial_end']) ? Carbon::parse($subscription['trial_end']) : null,
             'customer_id' => $subscription['customer'] ?? null,
             'metadata' => $subscription['metadata'] ?? [],
         ];

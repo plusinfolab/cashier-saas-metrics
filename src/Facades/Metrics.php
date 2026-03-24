@@ -5,6 +5,7 @@ namespace PlusInfoLab\CashierSaaSMetrics\Facades;
 use Illuminate\Support\Facades\Facade;
 use PlusInfoLab\CashierSaaSMetrics\Contracts\MetricCalculator;
 use PlusInfoLab\CashierSaaSMetrics\Contracts\SubscriptionProvider;
+use PlusInfoLab\CashierSaaSMetrics\Metrics\MetricsManager;
 
 /**
  * @method static \PlusInfoLab\CashierSaaSMetrics\Metrics\MRR mrr()
@@ -16,7 +17,7 @@ use PlusInfoLab\CashierSaaSMetrics\Contracts\SubscriptionProvider;
  * @method static \PlusInfoLab\CashierSaaSMetrics\Metrics\CohortAnalysis cohorts()
  * @method static \PlusInfoLab\CashierSaaSMetrics\Metrics\CohortAnalysis cohortAnalysis()
  *
- * @see \PlusInfoLab\CashierSaaSMetrics\Metrics\MetricsManager
+ * @see MetricsManager
  */
 class Metrics extends Facade
 {

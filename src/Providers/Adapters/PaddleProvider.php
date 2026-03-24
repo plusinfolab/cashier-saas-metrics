@@ -2,6 +2,7 @@
 
 namespace PlusInfoLab\CashierSaaSMetrics\Providers\Adapters;
 
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 
 class PaddleProvider extends AbstractSubscriptionProvider
@@ -45,7 +46,8 @@ class PaddleProvider extends AbstractSubscriptionProvider
 
             return collect($response['response'] ?? [])
                 ->filter(function (array $sub) use ($start, $end) {
-                    $cancelledAt = \Illuminate\Support\Carbon::parse($sub['cancelled_at'] ?? $sub['updated_at']);
+                    $cancelledAt = Carbon::parse($sub['cancelled_at'] ?? $sub['updated_at']);
+
                     return $cancelledAt->between($start, $end);
                 })
                 ->map(function (array $sub) {
@@ -73,7 +75,8 @@ class PaddleProvider extends AbstractSubscriptionProvider
 
             return collect($response['response'] ?? [])
                 ->filter(function (array $sub) use ($start, $end) {
-                    $createdAt = \Illuminate\Support\Carbon::parse($sub['sign_up_date']);
+                    $createdAt = Carbon::parse($sub['sign_up_date']);
+
                     return $createdAt->between($start, $end);
                 })
                 ->map(function (array $sub) {
@@ -132,7 +135,7 @@ class PaddleProvider extends AbstractSubscriptionProvider
                         'status' => $payment['status'] ?? 'paid',
                         'subscription_id' => $payment['subscription_id'] ?? null,
                         'customer_id' => $payment['customer_id'] ?? null,
-                        'created_at' => \Illuminate\Support\Carbon::parse($payment['payment_date'] ?? $payment['created_at']),
+                        'created_at' => Carbon::parse($payment['payment_date'] ?? $payment['created_at']),
                     ];
                 });
         } catch (\Exception $e) {
@@ -165,7 +168,7 @@ class PaddleProvider extends AbstractSubscriptionProvider
                         'status' => $payment['status'] ?? 'paid',
                         'subscription_id' => $payment['subscription_id'] ?? null,
                         'customer_id' => $payment['customer_id'] ?? null,
-                        'created_at' => \Illuminate\Support\Carbon::parse($payment['payment_date'] ?? $payment['created_at']),
+                        'created_at' => Carbon::parse($payment['payment_date'] ?? $payment['created_at']),
                     ];
                 });
         } catch (\Exception $e) {
@@ -192,10 +195,10 @@ class PaddleProvider extends AbstractSubscriptionProvider
             'currency' => $planCurrency,
             'interval' => $planInterval,
             'quantity' => 1,
-            'created_at' => \Illuminate\Support\Carbon::parse($subscription['sign_up_date'] ?? $subscription['created_at']),
-            'updated_at' => isset($subscription['updated_at']) ? \Illuminate\Support\Carbon::parse($subscription['updated_at']) : null,
-            'cancelled_at' => isset($subscription['cancelled_at']) ? \Illuminate\Support\Carbon::parse($subscription['cancelled_at']) : null,
-            'next_payment_date' => isset($subscription['next_payment_date']) ? \Illuminate\Support\Carbon::parse($subscription['next_payment_date']) : null,
+            'created_at' => Carbon::parse($subscription['sign_up_date'] ?? $subscription['created_at']),
+            'updated_at' => isset($subscription['updated_at']) ? Carbon::parse($subscription['updated_at']) : null,
+            'cancelled_at' => isset($subscription['cancelled_at']) ? Carbon::parse($subscription['cancelled_at']) : null,
+            'next_payment_date' => isset($subscription['next_payment_date']) ? Carbon::parse($subscription['next_payment_date']) : null,
             'customer_id' => $subscription['customer_id'] ?? null,
             'user_id' => $subscription['user_id'] ?? null,
             'email' => $subscription['user_email'] ?? null,

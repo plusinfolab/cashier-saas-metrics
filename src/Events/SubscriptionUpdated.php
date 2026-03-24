@@ -13,6 +13,5 @@ class SubscriptionUpdated
         public readonly ?string $customerId = null,
         public readonly ?array $changes = null,
         public readonly ?array $subscriptionData = null
-    ) {
-    }
+    ) {}
 }

@@ -20,8 +20,6 @@ enum PeriodType: string
     /**
      * Get the date range for the period.
      *
-     * @param \DateTimeInterface|null $customStart
-     * @param \DateTimeInterface|null $customEnd
      * @return array{\DateTimeInterface, \DateTimeInterface}
      */
     public function getDateRange(?\DateTimeInterface $customStart = null, ?\DateTimeInterface $customEnd = null): array
