@@ -1,37 +1,45 @@
 <?php
 
-namespace VendorName\Skeleton\Tests;
+namespace PlusInfoLab\CashierSaaSMetrics\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use VendorName\Skeleton\SkeletonServiceProvider;
+use PlusInfoLab\CashierSaaSMetrics\CashierSaaSMetricsServiceProvider;
 
-class TestCase extends Orchestra
+abstract class TestCase extends Orchestra
 {
     protected function setUp(): void
     {
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'VendorName\\Skeleton\\Database\\Factories\\'.class_basename($modelName).'Factory'
+            fn (string $modelName) => 'PlusInfoLab\\CashierSaaSMetrics\\Database\\Factories\\'.class_basename($modelName).'Factory'
         );
     }
 
     protected function getPackageProviders($app)
     {
         return [
-            SkeletonServiceProvider::class,
+            CashierSaaSMetricsServiceProvider::class,
         ];
     }
 
     public function getEnvironmentSetUp($app)
     {
-        config()->set('database.default', 'testing');
+        $app['config']->set('database.default', 'testing');
 
-        /*
-         foreach (\Illuminate\Support\Facades\File::allFiles(__DIR__ . '/../database/migrations') as $migration) {
-            (include $migration->getRealPath())->up();
-         }
-         */
+        // Set up package configuration
+        $app['config']->set('saas-metrics.provider', 'custom');
+        $app['config']->set('saas-metrics.base_currency', 'USD');
+        $app['config']->set('saas-metrics.cache.enabled', false);
+        $app['config']->set('saas-metrics.auto_recalculate', false);
+
+        // Custom provider configuration for testing
+        $app['config']->set('saas-metrics.providers.custom', [
+            'models' => [
+                'subscription' => null,
+                'payment' => null,
+            ],
+        ]);
     }
 }

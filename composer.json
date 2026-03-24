@@ -1,24 +1,37 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "plusinfolab/cashier-saas-metrics",
+    "description": "SaaS metrics analyzer for Laravel. Track MRR, churn, LTV, ARPU, and cohort analysis with Stripe, Paddle, and custom billing providers.",
     "keywords": [
-        ":vendor_name",
+        "plusinfolab",
         "laravel",
-        ":package_slug"
+        "saas",
+        "metrics",
+        "analytics",
+        "mrr",
+        "churn",
+        "ltv",
+        "stripe",
+        "cashier",
+        "subscription",
+        "revenue"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/plusinfolab/cashier-saas-metrics",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
-            "role": "Developer"
+            "name": "Aditya Jodhani",
+            "email": "info@plusinfolab.in",
+            "role": "Maintainer"
         }
     ],
     "require": {
         "php": "^8.4",
         "spatie/laravel-package-tools": "^1.16",
-        "illuminate/contracts": "^11.0||^12.0"
+        "illuminate/contracts": "^11.0||^12.0",
+        "illuminate/support": "^11.0||^12.0",
+        "illuminate/cache": "^11.0||^12.0",
+        "illuminate/queue": "^11.0||^12.0",
+        "guzzlehttp/guzzle": "^7.0"
     },
     "require-dev": {
         "laravel/pint": "^1.14",
@@ -31,18 +44,23 @@
         "phpstan/extension-installer": "^1.4",
         "phpstan/phpstan-deprecation-rules": "^2.0",
         "phpstan/phpstan-phpunit": "^2.0",
-        "spatie/laravel-ray": "^1.35"
+        "spatie/laravel-ray": "^1.35",
+        "laravel/cashier": "^15.0"
+    },
+    "suggest": {
+        "laravel/cashier": "Required for Stripe subscription integration",
+        "laravel/nova": "Required for Nova dashboard widgets",
+        "filament/filament": "Required for Filament dashboard widgets"
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src/",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories/"
+            "PlusInfoLab\\CashierSaaSMetrics\\": "src/",
+            "PlusInfoLab\\CashierSaaSMetrics\\Database\\Factories\\": "database/factories/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests/",
-            "Workbench\\App\\": "workbench/app/"
+            "PlusInfoLab\\CashierSaaSMetrics\\Tests\\": "tests/"
         }
     },
     "scripts": {
@@ -63,10 +81,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
+                "PlusInfoLab\\CashierSaaSMetrics\\CashierSaaSMetricsServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\Facades\\Skeleton"
+                "Metrics": "PlusInfoLab\\CashierSaaSMetrics\\Facades\\Metrics"
             }
         }
     },
