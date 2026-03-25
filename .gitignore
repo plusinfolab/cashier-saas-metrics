@@ -22,7 +22,6 @@ _ide_helper_models.php
 # Editors
 /.idea
 /.fleet
-/.vscode
 
 # Misc
 phpunit.xml
@@ -31,3 +30,7 @@ testbench.yaml
 /docs
 /coverage
 /.claude
+branch_structure.json
+temp_auto_push.bat
+temp_interactive_push.bat
+.gitignore
